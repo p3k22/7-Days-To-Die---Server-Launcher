@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:_7D2D_ServerLauncher.ViewModels"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Margin="10">
+    <StackPanel Margin="10" d:DataContext="{d:DesignInstance Type=viewModels:PerformanceVm, IsDesignTimeCreatable=True}">
 
         <!-- Title -->
         <TextBlock Text="PERFORMANCE CONFIGURATION"
@@ -15,47 +17,68 @@
                    Margin="10,10,10,10" Canvas.ZIndex="1" />
 
         <!-- Content -->
-        <Border x:Name="ContentBorder" BorderBrush="Black" BorderThickness="2" Padding="10" CornerRadius="5" Margin="0,-20,0,0">
-            <StackPanel x:Name="ContentPanel" Orientation="Vertical">
-                <!-- Label 1 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Max View Distance" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+        <Border x:Name="ContentBorder" BorderBrush="Black" Background="#BF808080" Width="780" BorderThickness="2"
+                 CornerRadius="5" Margin="0,-20,0,0">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" x:Name="ContentPanel" Orientation="Vertical" Margin="10">
+
+                    <!-- Label 1 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Max View Distance" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding MaxViewDistance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="6" Maximum="12" Increment="1" />
+                    </StackPanel>
+
+                    <!-- Label 2 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Max Queued Mesh Layers" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding MaxMeshLayers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="1" Maximum="9999" Increment="1" />
+                    </StackPanel>
+
+                    <!-- Label 3 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Is Dynamic Mesh Enabled" VerticalAlignment="Center" Width="150" />
+                        <ComboBox Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding TrueFalseOptions}"
+                                  SelectedItem="{Binding IsDynamicMeshEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"/>
+                    </StackPanel>
+
                 </StackPanel>
 
-                <!-- Label 2 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Max Queued Mesh Layers" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+
+                <StackPanel Grid.Column="1" x:Name="ContentPanel2" Orientation="Vertical" Margin="10">
+                    <!-- Label 4 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Is DM Land Claim Only" VerticalAlignment="Center" Width="150" />
+                        <ComboBox Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding TrueFalseOptions}"
+                                  SelectedItem="{Binding IsDmLcOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"/>
+                    </StackPanel>
+                    <!-- Label 5 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="DM Land Claim Buffer" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding DmLcBuffer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="1" Maximum="99" Increment="1" />
+                    </StackPanel>
+
+                    <!-- Label 6 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="DM Max Item Cache" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding DmMaxItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="1" Maximum="99" Increment="1" />
+                    </StackPanel>
+
                 </StackPanel>
 
-                <!-- Label 3 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Is Dynamic Mesh Enabled" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
 
-                <!-- Label 4 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Is DM Land Claim Only" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-
-                <!-- Label 5 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="DM Land Claim Buffer" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 6 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="DM Max Item Cache" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-            </StackPanel>
-
+            </Grid>
         </Border>
 
         <!-- Toggle Button -->

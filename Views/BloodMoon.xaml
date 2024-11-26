@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:_7D2D_ServerLauncher.ViewModels"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Margin="10">
+    <StackPanel Margin="10"  d:DataContext="{d:DesignInstance Type=viewModels:BloodMoonVm, IsDesignTimeCreatable=True}">
 
         <!-- Title -->
         <TextBlock Text="BLOOD MOON CONFIGURATION"
@@ -15,30 +17,34 @@
                    Margin="10,10,10,10" Canvas.ZIndex="1" />
 
         <!-- Content -->
-        <Border x:Name="ContentBorder" BorderBrush="Black" Background="Gray" BorderThickness="2" Padding="10" CornerRadius="5" Margin="0,-20,0,0">
+        <Border x:Name="ContentBorder" BorderBrush="Black" Background="#BF808080" Width="400"  BorderThickness="2" Padding="10" CornerRadius="5" Margin="0,-20,0,0">
             <StackPanel x:Name="ContentPanel" Orientation="Vertical">
                 <!-- Label 1 -->
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Frequency" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+                    <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding Frequency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        VerticalAlignment="Center" Minimum="0" Maximum="30" Increment="1" />
                 </StackPanel>
 
                 <!-- Label 2 -->
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Day Range" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+                    <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding DayRange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        VerticalAlignment="Center" Minimum="0" Maximum="20" Increment="1" />
                 </StackPanel>
 
                 <!-- Label 3 -->
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Days Warning" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+                    <Label Content="Hours Warning" VerticalAlignment="Center" Width="150" />
+                    <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding HoursWarning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        VerticalAlignment="Center" Minimum="0" Maximum="8" Increment="1" />
                 </StackPanel>
 
                 <!-- Label 4 -->
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Max BM Spawned Zombies" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+                    <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding MaxSpawnedZombie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        VerticalAlignment="Center" Minimum="4" Maximum="64" Increment="1" />
                 </StackPanel>
 
 

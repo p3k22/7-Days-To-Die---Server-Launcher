@@ -9,18 +9,19 @@ using System.Windows.Shapes;
 /// <summary>
 ///    Interaction logic for ServerConfig.xaml
 /// </summary>
-public partial class Network
+public partial class Slots
 {
-   public Network()
+   public Slots()
    {
       InitializeComponent();
-      DataContext = new NetworkVm();
+      DataContext = new SlotsVm();
    }
 
    private void ToggleArrow_Checked(object sender, RoutedEventArgs e)
    {
       // Collapse the border and hide content
       ContentPanel.Visibility = Visibility.Collapsed; // Hide content
+      
       ContentBorder.Height = 30; // Set border height to 20
 
       // Change the arrow to point up

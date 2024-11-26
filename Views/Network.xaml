@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:viewModels="clr-namespace:_7D2D_ServerLauncher.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Margin="10">
+    <StackPanel Margin="10" d:DataContext="{d:DesignInstance Type=viewModels:NetworkVm, IsDesignTimeCreatable=True}">
 
         <!-- Title -->
         <TextBlock Text="NETWORK CONFIGURATION"
@@ -15,30 +17,42 @@
                    Margin="10,10,10,10" Canvas.ZIndex="1" />
 
         <!-- Content -->
-        <Border x:Name="ContentBorder" Width="400" BorderBrush="Black" BorderThickness="2" Padding="10" CornerRadius="5" Margin="0,-20,0,0">
-            <StackPanel  x:Name="ContentPanel" Orientation="Vertical" >
+        <Border x:Name="ContentBorder" Width="400" BorderBrush="Black" Background="#BF808080" BorderThickness="2"
+              CornerRadius="5" Margin="0,-20,0,0">
+            <StackPanel x:Name="ContentPanel" Orientation="Vertical" Margin="10">
+                <!-- Label 0 -->
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Label Content="Public IP Address" VerticalAlignment="Center" Width="150" />
+                   <TextBox Width="200" VerticalAlignment="Center" Text ="{Binding Path=Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"/>
+                </StackPanel>
                 <!-- Label 1 -->
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Port" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+                    <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        VerticalAlignment="Center" Minimum="26900" Maximum="26905" Increment="1" />
                 </StackPanel>
 
                 <!-- Label 2 -->
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Visibility" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+                    <ComboBox Width="200" VerticalAlignment="Center"
+                              ItemsSource="{Binding VisibilityOptions}"
+                              SelectedItem="{Binding Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"/>
                 </StackPanel>
 
                 <!-- Label 3 -->
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Disabled Protocols" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+                    <ComboBox Width="200" VerticalAlignment="Center"
+                              ItemsSource="{Binding DisabledProtocolsOptions}"
+                              SelectedItem="{Binding DisabledProtocols, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"/>
                 </StackPanel>
 
                 <!-- Label 4 -->
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Download Speed kB/s" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+                    <xctk:IntegerUpDown Width="200" Height="26"    Value="{Binding DownloadSpeed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        VerticalAlignment="Center" Minimum="512" Maximum="1300" Increment="1" />
                 </StackPanel>
             </StackPanel>
 

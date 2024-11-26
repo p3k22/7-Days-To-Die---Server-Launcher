@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:_7D2D_ServerLauncher.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Margin="10">
+    <StackPanel Margin="10" d:DataContext="{d:DesignInstance Type=viewModels:ServerVm, IsDesignTimeCreatable=True}">
 
         <!-- Title -->
         <TextBlock Text="SERVER CONFIGURATION"
@@ -15,53 +16,72 @@
                    Margin="10,10,10,10" Canvas.ZIndex="1" />
 
         <!-- Content -->
-        <Border x:Name="ContentBorder" Width="400" BorderBrush="Black" BorderThickness="2" Padding="10" CornerRadius="5"
-                Margin="0,-20,0,0">
-            <StackPanel x:Name="ContentPanel" Orientation="Vertical">
-                <!-- Label 1 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Name" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+        <Border x:Name="ContentBorder" Width="780" BorderBrush="Black" Background="#BF808080" BorderThickness="2"
+                CornerRadius="5" Margin="0,-20,0,0">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" x:Name="ContentPanel" Orientation="Vertical" Margin="10">
+
+                    <!-- Label 1 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Name" VerticalAlignment="Center" Width="150" />
+                        <TextBox Width="200" VerticalAlignment="Center" Text="{ Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                    </StackPanel>
+
+                    <!-- Label 2 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Description" VerticalAlignment="Center" Width="150" />
+                        <TextBox Width="200" VerticalAlignment="Center" Text="{ Binding Path=Description , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                    </StackPanel>
+
+                    <!-- Label 3 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Website URL" VerticalAlignment="Center" Width="150" />
+                        <TextBox Width="200" VerticalAlignment="Center" Text="{ Binding Path=WebUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged  }" />
+                    </StackPanel>
+
+                    <!-- Label 4 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Password" VerticalAlignment="Center" Width="150" />
+                        <TextBox Width="200" VerticalAlignment="Center" Text="{ Binding Path=Password , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                    </StackPanel>
+
+
                 </StackPanel>
 
-                <!-- Label 2 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Description" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+                <StackPanel Grid.Column="1" x:Name="ContentPanel2" Orientation="Vertical" Margin="10">
+                    <!-- Label 5 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Login Confirmation" VerticalAlignment="Top" Width="150" />
+                        <TextBox Width="200" Height="70" VerticalAlignment="Center" TextWrapping="NoWrap"
+                                 AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                 Text="{ Binding Path=LoginConf , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                    </StackPanel>
+                    <!-- Label 6 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Region" VerticalAlignment="Center" Width="150" />
+                        <ComboBox Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding RegionOptions}"
+                                  SelectedItem="{Binding Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                    </StackPanel>
+
+                    <!-- Label 7 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Language" VerticalAlignment="Center" Width="150" />
+                        <ComboBox Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding LanguageOptions}"
+                                  SelectedItem="{Binding Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                    </StackPanel>
                 </StackPanel>
 
-                <!-- Label 3 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Website URL" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 4 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Password" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 5 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Login Confirmation" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 6 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Region" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 7 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Language" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-
-            </StackPanel>
+            </Grid>
 
         </Border>
 

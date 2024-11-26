@@ -1,5 +1,8 @@
 ﻿namespace _7D2D_ServerLauncher.Views
 {
+   using _7D2D_ServerLauncher.Helpers;
+   using _7D2D_ServerLauncher.ViewModels;
+
    using System.Windows;
    using System.Windows.Media;
    using System.Windows.Shapes;
@@ -12,13 +15,14 @@
       public Directory()
       {
             InitializeComponent();
-        }
+            DataContext = new DirectoryVm();
+      }
 
-        private void ToggleArrow_Checked(object sender, RoutedEventArgs e)
+      private void ToggleArrow_Checked(object sender, RoutedEventArgs e)
         {
            // Collapse the border and hide content
            ContentPanel.Visibility = Visibility.Collapsed; // Hide content
-           ContentBorder.Width = 400; // Set border height to 20
+           
            ContentBorder.Height = 30; // Set border height to 20
 
            // Change the arrow to point up
@@ -34,5 +38,14 @@
            // Change the arrow to point down
            ((ToggleArrow.Content as Path)!).Data = Geometry.Parse("M 0 10 L 10 0 L 20 10 Z"); // Down arrow
         }
-    }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+           var dir = ControlHelper.OpenFolderDialog();
+           if (dir != null)
+           {
+              CustUserDir.Text = dir;
+           }
+        }
+   }
 }

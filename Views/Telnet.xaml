@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:_7D2D_ServerLauncher.ViewModels"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Margin="10">
+    <StackPanel Margin="10" d:DataContext="{d:DesignInstance Type=viewModels:TelnetVm, IsDesignTimeCreatable=True}">
 
         <!-- Title -->
         <TextBlock Text="TELNET CONFIGURATION"
@@ -15,46 +17,70 @@
                    Margin="10,10,10,10" Canvas.ZIndex="1" />
 
         <!-- Content -->
-        <Border x:Name="ContentBorder" BorderBrush="Black" BorderThickness="2" Padding="10" CornerRadius="5" Margin="0,-20,0,0">
-            <StackPanel x:Name="ContentPanel" Orientation="Vertical">
-                <!-- Label 1 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Is Enabled" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+        <Border x:Name="ContentBorder" BorderBrush="Black" Background="#BF808080" Width="780" BorderThickness="2"
+                 CornerRadius="5" Margin="0,-20,0,0">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+
+                <StackPanel Grid.Column="0" x:Name="ContentPanel" Orientation="Vertical" Margin="10">
+                    <!-- Label 1 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Is Enabled" VerticalAlignment="Center" Width="150" />
+                        <CheckBox x:Name="IsEnabledCheckBox" VerticalAlignment="Center"
+                                  Checked="ToggleButton_OnChecked"
+                                  Unchecked="ToggleButton_OnUnchecked"
+                                  IsChecked="{Binding Path=IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <!-- Label 2 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Port" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"
+                                            Value="{Binding Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="1024" Maximum="49151" Increment="1" />
+                    </StackPanel>
+
+                    <!-- Label 3 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Password" VerticalAlignment="Center" Width="150" />
+                        <TextBox Width="200" VerticalAlignment="Center"
+                                 Text="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <!-- Label 4 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Failed Login Limit" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"
+                                            Value="{Binding FailedLoginLimit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="0" Maximum="10" Increment="1" />
+                    </StackPanel>
+                </StackPanel>
+  
+                <StackPanel Grid.Column="1" x:Name="ContentPanel2" Orientation="Vertical" Margin="10,55,10,10">
+                    <!-- Label 5 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Failed Login Block Time" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"
+                                            Value="{Binding FailedLoginBlockTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="0" Maximum="999" Increment="1" />
+                    </StackPanel>
+
+                    <!-- Label 6 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Enable Terminal Window" VerticalAlignment="Center" Width="150" />
+                        <ComboBox Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding TerminalWindowEnableOptions}"
+                                  SelectedItem="{Binding IsTerminalWindowEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
                 </StackPanel>
 
-                <!-- Label 2 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Port" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 3 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Password" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 4 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Failed Login Limit" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 5 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Failed Login Block Time" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 6 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Enable Terminal Window" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-            </StackPanel>
-
+            </Grid>
         </Border>
 
         <!-- Toggle Button -->

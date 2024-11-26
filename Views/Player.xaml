@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:_7D2D_ServerLauncher.ViewModels"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Margin="10">
+    <StackPanel Margin="10" d:DataContext="{d:DesignInstance Type=viewModels:PlayerVm, IsDesignTimeCreatable=True}">
         <!-- Title -->
         <TextBlock Text="PLAYER CONFIGURATION"
                    FontSize="22"
@@ -14,76 +16,109 @@
                    Margin="10,10,10,10" Canvas.ZIndex="1" />
 
         <!-- Content -->
-        <Border x:Name="ContentBorder" BorderBrush="Black" BorderThickness="2" Padding="10" CornerRadius="5" Margin="0,-20,0,0">
-            <StackPanel x:Name="ContentPanel" Orientation="Vertical">
-                <!-- Label 1 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Player Block Damage" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+        <Border x:Name="ContentBorder" BorderBrush="Black" Background="#BF808080" Width="780" BorderThickness="2"
+                CornerRadius="5" Margin="0,-20,0,0">
+
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+
+                <StackPanel Grid.Column="0" x:Name="ContentPanel" Orientation="Vertical" Margin="10">
+
+                    <!-- Label 1 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Block Damage" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"
+                                            Value="{Binding BlockDamage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="25" Maximum="300" Increment="1" />
+                    </StackPanel>
+
+                    <!-- Label 11 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Friendly Fire Mode" VerticalAlignment="Center" Width="150" />
+                        <ComboBox Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding FriendlyFireOptions}"
+                                  SelectedItem="{Binding FriendlyFire, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                    </StackPanel>
+
+                    <!-- Label 10 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Shared Kill Range" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"
+                                            Value="{Binding SharedKillRange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="0" Maximum="10000" Increment="1" />
+                    </StackPanel>
+
+                    <!-- Label 2 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Safe Zone Level" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"
+                                            Value="{Binding SafeZoneLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="0" Maximum="99" Increment="1" />
+                    </StackPanel>
+
+                    <!-- Label 3 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Safe Zone Hours" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"
+                                            Value="{Binding SafeZoneHours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="1" Maximum="999" Increment="1" />
+                    </StackPanel>
+
                 </StackPanel>
 
-                <!-- Label 2 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Safe Zone Level" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
+
+                <StackPanel Grid.Column="1" x:Name="ContentPanel2" Orientation="Vertical" Margin="10">
+
+                    <!-- Label 5 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Death Penalty" VerticalAlignment="Center" Width="150" />
+                        <ComboBox Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding DeathPenaltyOptions}"
+                                  SelectedItem="{Binding DeathPenalty, Mode=TwoWay}" />
+                    </StackPanel>
+
+                    <!-- Label 6 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Drop On Death" VerticalAlignment="Center" Width="150" />
+                        <ComboBox Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding DropOnDeathOptions}"
+                                  SelectedItem="{Binding DropOnDeath, Mode=TwoWay}" />
+                    </StackPanel>
+
+                    <!-- Label 7 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Drop On Quit" VerticalAlignment="Center" Width="150" />
+                        <ComboBox Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding DropOnQuitOptions}"
+                                  SelectedItem="{Binding DropOnQuit, Mode=TwoWay}" />
+                    </StackPanel>
+
+                    <!-- Label 8 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Bedroll Dead Zone Size" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"
+                                            Value="{Binding BedrollDeadZoneSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="0" Maximum="30" Increment="1" />
+                    </StackPanel>
+
+                    <!-- Label 9 -->
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Content="Bedroll Expiry Time" VerticalAlignment="Center" Width="150" />
+                        <xctk:IntegerUpDown Width="200" Height="26"
+                                            Value="{Binding BedrollExpiry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            VerticalAlignment="Center" Minimum="3" Maximum="60" Increment="1" />
+                    </StackPanel>
+
+
                 </StackPanel>
 
-                <!-- Label 3 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Safe Zone Hours" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 4 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Is Cheat Mode Enabled" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 5 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Death Penalty" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 6 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Drop On Death" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 7 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Drop On Quit" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 8 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Bedroll Dead Zone Size" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 9 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Bedroll Expiry Time" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 10 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Shared Kill Range" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Label 11 -->
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Friendly Fire Mode" VerticalAlignment="Center" Width="150" />
-                    <TextBox Width="200" VerticalAlignment="Center" />
-                </StackPanel>
-
-            </StackPanel>
-
+            </Grid>
         </Border>
         <!-- Toggle Button -->
         <ToggleButton x:Name="ToggleArrow"
