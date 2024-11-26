@@ -44,7 +44,8 @@ public class DirectoryVm : INotifyPropertyChanged, IControlData
 
    public void SetMembers(Dictionary<string, string> properties)
    {
-      CustomDirectory = properties["UserDataFolder"];
+      properties.TryGetValue("UserDataFolder", out var custDir);
+      CustomDirectory = custDir ?? "";
       AdminFile = properties["AdminFileName"];
    }
 

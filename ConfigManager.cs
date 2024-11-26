@@ -77,6 +77,11 @@ public class ConfigManager
       writer.Write("<?xml version=\"1.0\"?>\r\n<ServerSettings>\n");
       foreach (var kvp in properties)
       {
+         if (kvp.Key == "UserDataFolder" && (string.IsNullOrEmpty(kvp.Value) || string.IsNullOrWhiteSpace(kvp.Value)))
+         {
+            continue;
+         }
+
          writer.WriteLine($"<property name=\"{kvp.Key}\"\t value=\"{kvp.Value}\"/>\n");
       }
 

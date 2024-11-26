@@ -15,9 +15,6 @@ public partial class MainWindow
 
    private readonly MainWindowVm _viewModel;
 
-   //TODO -- Create Profile Name System
-   //TODO -- Create Launch Button error check to open FileDialogue to find .exe location
-   //TODO -- Set triggers for other elements to save config to file (like GlobalTextbox_TextCHanged)
    public MainWindow()
    {
       InitializeComponent();
@@ -27,13 +24,14 @@ public partial class MainWindow
       LoadInitialProfileAsync();
    }
 
-   private async void ChangeProfileAsync(int id)
+   private async void ChangeProfileAsync(int id, bool forceResetFile = false)
    {
       _viewModel.SetSelectedProfileID(id);
       _isAutoDetectingChanges = false;
+      ProfileName.Text = _viewModel.GetProfileName(id);
 
       var profileFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"profile{id}.xml");
-      if (File.Exists(profileFilePath))
+      if (File.Exists(profileFilePath) && !forceResetFile)
       {
          await _viewModel.SetDataToAllFields(profileFilePath);
       }
@@ -46,6 +44,30 @@ public partial class MainWindow
 
       await Task.Delay(100);
       _isAutoDetectingChanges = true;
+   }
+
+   private void GlobalComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+   {
+      if (!_isAutoDetectingChanges)
+      {
+         return;
+      }
+
+      ConfigManager.WritePropertiesToFile(
+      Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"profile{_viewModel.SelectedProfileID}.xml"),
+      _viewModel.GetDataFromAllFields());
+   }
+
+   private void GlobalIntBox_SelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+   {
+      if (!_isAutoDetectingChanges)
+      {
+         return;
+      }
+
+      ConfigManager.WritePropertiesToFile(
+      Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"profile{_viewModel.SelectedProfileID}.xml"),
+      _viewModel.GetDataFromAllFields());
    }
 
    private void GlobalTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -104,6 +126,17 @@ public partial class MainWindow
          SetCheckBoxProfile(id);
          ChangeProfileAsync(id);
       }
+   }
+
+   private void ProfileName_OnTextChanged(object sender, TextChangedEventArgs e)
+   {
+      var tb = sender as TextBox;
+      _viewModel.SaveProfileName(_viewModel.SelectedProfileID, tb!.Text);
+   }
+
+   private void ResetProfileButton_OnClick(object sender, RoutedEventArgs e)
+   {
+      ChangeProfileAsync(_viewModel.SelectedProfileID, true);
    }
 
    private void SetCheckBoxProfile(int id)

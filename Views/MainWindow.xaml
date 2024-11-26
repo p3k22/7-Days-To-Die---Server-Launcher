@@ -33,6 +33,7 @@
         </Style>
 
         <Style TargetType="xctk:IntegerUpDown">
+            <EventSetter Event="ValueChanged" Handler="GlobalIntBox_SelectionChanged"/>
             <Setter Property="FontFamily" Value="pack://application:,,,/Font/#warsaw gothic" />
             <Setter Property="FontSize" Value="18" />
             <Setter Property="Foreground" Value="Black" />
@@ -48,6 +49,7 @@
         </Style>
 
         <Style TargetType="ComboBox">
+            <EventSetter Event="SelectionChanged" Handler="GlobalComboBox_SelectionChanged"/>
             <Setter Property="FontFamily" Value="pack://application:,,,/Font/#warsaw gothic" />
             <Setter Property="FontSize" Value="18" />
             <Setter Property="Background" Value="Gray" />
@@ -305,8 +307,44 @@
             </WrapPanel>
 
             <WrapPanel Grid.Column="1" HorizontalAlignment="Center" Margin="10">
-                <Label Content="Profile Name" FontSize="32" />
-                <TextBox Width="280" Height="40" FontSize="32" />
+                <WrapPanel Margin="10">
+                    <Label Content="Profile Name" FontSize="32" />
+                    <TextBox x:Name="ProfileName"  Width="280" Height="40" FontSize="32" TextChanged="ProfileName_OnTextChanged"/>
+                </WrapPanel>
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                    <Button  Width="125" Height="32"  FontSize="18"
+                            FontFamily="pack://application:,,,/Font/#warsaw gothic" Background="OliveDrab" Foreground="WhiteSmoke"
+                            Content="Reset To Default" FontWeight="Bold" BorderBrush="DarkGreen" BorderThickness="2"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" Click="ResetProfileButton_OnClick">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid>
+                                                <!-- Name the Border correctly for Trigger reference -->
+                                                <Border x:Name="border" CornerRadius="15" Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                </Border>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <!-- Reference the x:Name property correctly -->
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="LimeGreen" />
+                                                </Trigger>
+                                                <Trigger Property="IsMouseCaptured" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="LawnGreen" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </WrapPanel>
             </WrapPanel>
 
         </Grid>
