@@ -1,12 +1,16 @@
 ﻿namespace _7D2D_ServerLauncher.ViewModels;
 
-using _7D2D_ServerLauncher.Interfaces;
+using System.Reflection;
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-public class BloodMoonVm : INotifyPropertyChanged, IControlData
+public class BloodMoonVm : BaseViewModel
 {
+   public BloodMoonVm()
+   {
+      // Collect and register properties
+      var properties = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+      RegisterProperties(properties);
+   }
+
    private string _dayRange = "0";
 
    private string _frequency = "7";
@@ -14,8 +18,6 @@ public class BloodMoonVm : INotifyPropertyChanged, IControlData
    private string _hoursWarning = "8";
 
    private string _maxSpawnedZombie = "8";
-
-   public event PropertyChangedEventHandler? PropertyChanged;
 
    public string DayRange
    {
@@ -43,15 +45,6 @@ public class BloodMoonVm : INotifyPropertyChanged, IControlData
       }
    }
 
-   public Dictionary<string, string> GetMembers =>
-      new Dictionary<string, string>
-         {
-            {"BloodMoonRange", _dayRange},
-            {"BloodMoonFrequency", _frequency},
-            {"BloodMoonWarning", _hoursWarning},
-            {"BloodMoonEnemyCount", _maxSpawnedZombie}
-         };
-
    public string HoursWarning
    {
       get => _hoursWarning;
@@ -78,16 +71,27 @@ public class BloodMoonVm : INotifyPropertyChanged, IControlData
       }
    }
 
-   public void SetMembers(Dictionary<string, string> properties)
-   {
-      DayRange = properties["BloodMoonRange"];
-      Frequency = properties["BloodMoonFrequency"];
-      HoursWarning = properties["BloodMoonWarning"];
-      MaxSpawnedZombie = properties["BloodMoonEnemyCount"];
-   }
+   //TODO -- Carry on extending all VMs from BaseVM.  Get and set properties is now centralised
+   //public event PropertyChangedEventHandler? PropertyChanged;
+   //public Dictionary<string, string> GetMembers =>
+   //   new Dictionary<string, string>
+   //      {
+   //         {"BloodMoonRange", _dayRange},
+   //         {"BloodMoonFrequency", _frequency},
+   //         {"BloodMoonWarning", _hoursWarning},
+   //         {"BloodMoonEnemyCount", _maxSpawnedZombie}
+   //      };
 
-   private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-   {
-      PropertyChanged?.Invoke(this, new(propertyName));
-   }
+   //public void SetMembers(Dictionary<string, string> properties)
+   //{
+   //   DayRange = properties["BloodMoonRange"];
+   //   Frequency = properties["BloodMoonFrequency"];
+   //   HoursWarning = properties["BloodMoonWarning"];
+   //   MaxSpawnedZombie = properties["BloodMoonEnemyCount"];
+   //}
+
+   //private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+   //{
+   //   PropertyChanged?.Invoke(this, new(propertyName));
+   //}
 }
