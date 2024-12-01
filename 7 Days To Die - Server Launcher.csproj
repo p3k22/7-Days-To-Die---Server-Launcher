@@ -61,13 +61,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Views\Network.xaml.cs">
+		<Compile Update="Views\NetworkView.xaml.cs">
 			<SubType>Code</SubType>
 		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Interfaces\" />
 	</ItemGroup>
 
 </Project>
